@@ -1,6 +1,12 @@
 # electron-ffmpeg
 This is electron app that connect with ffmpeg library
 
+# What it does?
+Select a video, then click submit. You will get video duration
+
+- This project is following tutorial from udemy https://www.udemy.com/electron-react-tutorial
+- You need to install FFMPEG libraries first
+
 # electron-quick-start
 
 **Clone and run for a quick way to see Electron in action.**
