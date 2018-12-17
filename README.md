@@ -1,3 +1,6 @@
+# electron-ffmpeg
+This is electron app that connect with ffmpeg library
+
 # electron-quick-start
 
 **Clone and run for a quick way to see Electron in action.**

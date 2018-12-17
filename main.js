@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const ffmpeg = require('fluent-ffmpeg');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -45,6 +46,19 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+//
+ipcMain.on('video:submit', (event, filePath) => {
+  // app.quit();
+  ffmpeg.ffprobe(filePath, 
+
+    //because the process will take some time we have to do this callback function 
+    (err, metadata) => {
+      // console.log('Video duration is : ', metadata.format.duration);
+      mainWindow.webContents.send('video:metadata', metadata.format.duration);
+    }
+  );
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

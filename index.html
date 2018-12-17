@@ -5,13 +5,43 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>Video Info</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+    <br/>
+    <br/>
+
+    <form>
+      <div>
+        <label>Select a video</label>
+        <input type="file" accept="video/*" />
+      </div>
+      <button type="submit">Get Info</button>
+    </form>
+
+    <h1 id="videoDuration">Please select video and submit</h1>
 
     <script>
+      const electron = require('electron');
+      const { ipcRenderer } = electron;
+
+      //send data from this page into electron
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        // const file = document.querySelector('input').files[0];
+        const { path } = document.querySelector('input').files[0];
+
+        ipcRenderer.send('video:submit', path);
+        console.log(path);
+      });
+
+      // retrieve data from electeon into this page
+      ipcRenderer.on('video:metadata', (event, videoDuration) => {
+        document.querySelector('#videoDuration').innerHTML = `Video duration is ${videoDuration} second(s)`;
+      });
+
       // You can also require other files to run in this process
       require('./renderer.js')
     </script>
